@@ -7,6 +7,7 @@ function App() {
   const [playerName, setPlayerName] = useState('Mike');
   const [playerScore, setPlayerScore] = useState(0);
   const [playerCard, setPlayerCard] = useState(null);
+  const [playerCards, setPlayerCards] = useState([]);
   const [compScore, setCompScore] = useState(0);
   const [compCard, setCompCard] = useState(null);
   const [gameMessage, setGameMessage] = useState('Click button to play!')
@@ -14,12 +15,16 @@ function App() {
 
   const updateScore = (score, setPlayerScore) => {
     setPlayerScore(score + 1);
-  }
+  };
+
+  const updateCards = (playerCard) => {
+    setPlayerCards(oldCards => [...oldCards, playerCard])
+  };
 
   const checkWinner = (playerOne, playerTwo) => {
     if (playerOne > playerTwo) updateScore(playerScore, setPlayerScore);
     if (playerTwo > playerOne) updateScore(compScore, setCompScore);
-  }
+  };
 
   const checkGameOver = (playerScore, compScore) => {
     if (playerScore > 9) {
@@ -40,6 +45,12 @@ function App() {
     checkWinner(playerCard, compCard);
   }
 
+  const prevCards = playerCards.map((card, i) => {
+    return (
+      <span className={'card'+i} key={`card + ${i}`}>{card}</span>
+    )
+  })
+
   useEffect(() => {
     document.title = 'Welcome to War ' + playerName;
   }, [playerName])
@@ -52,6 +63,10 @@ function App() {
     checkGameOver(playerScore, compScore);
   });
 
+  useEffect(() => {
+    updateCards(playerCard);
+  }, [playerCard]);
+
   return (
     <div className='App'>
       <p>What is your name?</p>
@@ -60,7 +75,7 @@ function App() {
       <p>Player Two's score: {compScore}</p>
       <button disabled={gameOver} onClick={() => {playGameHandler()}}>Click to play!</button>
       <p style={{ fontWeight: 'bold' }}>{gameMessage}</p>
-      <div className='card'>{playerName}'s card: <span>{playerCard}</span></div>
+      <div className='card'>{playerName}'s card: <span>{playerCard}</span>{prevCards}</div>
       <div className='card'>Player Two's card: <span>{compCard}</span></div>
     </div>
   );
