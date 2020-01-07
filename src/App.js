@@ -21,13 +21,13 @@ function App() {
     if (playerTwo > playerOne) updateScore(compScore, setCompScore);
   }
 
-  const checkGameOver = () => {
+  const checkGameOver = (playerScore, compScore) => {
     if (playerScore > 9) {
-      setGameMessage(`Game over. ${playerName} wins!`);
+      setGameMessage(`Game over. ${playerName} wins! Score is ${playerScore} - ${compScore}`);
       setGameOver(true);
     }
     else if (compScore > 9) {
-      setGameMessage('Game over. Computer wins!');
+      setGameMessage(`Game over. Computer wins! Score is ${playerScore} - ${compScore}`);
       setGameOver(true);
     }
   }
@@ -42,11 +42,14 @@ function App() {
 
   useEffect(() => {
     document.title = 'Welcome to War ' + playerName;
-    setGameMessage(`Score is ${playerScore} - ${compScore}`);
-  }, [playerName, compScore, playerScore]);
+  }, [playerName])
 
   useEffect(() => {
-    checkGameOver();
+    setGameMessage(`Score is ${playerScore} - ${compScore}`);
+  }, [compScore, playerScore]);
+
+  useEffect(() => {
+    checkGameOver(playerScore, compScore);
   });
 
   return (
