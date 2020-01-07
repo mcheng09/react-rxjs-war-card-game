@@ -22,7 +22,6 @@ function App() {
   const checkWinner = (playerOne, playerTwo) => {
     if (playerOne > playerTwo) updateScore(playerOneScore, setPlayerOneScore);
     if (playerTwo > playerOne) updateScore(playerTwoScore, setPlayerTwoScore);
-    setGameMessage(`Score is ${playerOneScore} - ${playerTwoScore}`);
   }
 
   const checkGameOver = () => {
@@ -52,6 +51,7 @@ function App() {
 
   useEffect(() => {
     document.title = 'Welcome to War ' + playerOneName;
+    setGameMessage(`Score is ${playerOneScore} - ${playerTwoScore}`);
   })
 
   return (
