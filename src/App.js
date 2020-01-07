@@ -44,14 +44,12 @@ function App() {
 
     // Check who won
     checkWinner(playerOneCard, playerTwoCard);
-
-    // Check if game is over
-    checkGameOver();
   }
 
   useEffect(() => {
     document.title = 'Welcome to War ' + playerOneName;
     setGameMessage(`Score is ${playerOneScore} - ${playerTwoScore}`);
+    checkGameOver();
   })
 
   return (
