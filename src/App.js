@@ -5,11 +5,11 @@ import './App.css'
 function App() {
 
   // Create Player 1 and 2
-  const [playerOneScore, setPlayerOneScore] = useState(0);
-  const [playerTwoScore, setPlayerTwoScore] = useState(0);
-  const [playerOneCard, setPlayerOneCard] = useState(null);
-  const [playerTwoCard, setPlayerTwoCard] = useState(null);
-  const [playerOneName, setPlayerOneName] = useState('Mike');
+  const [playerScore, setPlayerScore] = useState(0);
+  const [compStore, setCompScore] = useState(0);
+  const [playerCard, setPlayerCard] = useState(null);
+  const [compCard, setCompCard] = useState(null);
+  const [playerName, setPlayerName] = useState('Mike');
   const [gameOver, setGameOver] = useState(false);
 
 
@@ -20,16 +20,16 @@ function App() {
   }
 
   const checkWinner = (playerOne, playerTwo) => {
-    if (playerOne > playerTwo) updateScore(playerOneScore, setPlayerOneScore);
-    if (playerTwo > playerOne) updateScore(playerTwoScore, setPlayerTwoScore);
+    if (playerOne > playerTwo) updateScore(playerScore, setPlayerScore);
+    if (playerTwo > playerOne) updateScore(compStore, setCompScore);
   }
 
   const checkGameOver = () => {
-    if (playerOneScore > 9) {
-      setGameMessage(`Game over. ${playerOneName} wins!`);
+    if (playerScore > 9) {
+      setGameMessage(`Game over. ${playerName} wins!`);
       setGameOver(true);
     }
-    else if (playerTwoScore > 9) {
+    else if (compStore > 9) {
       setGameMessage('Game over. Computer wins!');
       setGameOver(true);
     }
@@ -37,31 +37,33 @@ function App() {
 
   const playGameHandler = () => {
     // Generate Cards for both players
-    const playerOneCard = Math.ceil(Math.random() * 13);
-    const playerTwoCard = Math.ceil(Math.random() * 13);
-    setPlayerOneCard(playerOneCard);
-    setPlayerTwoCard(playerTwoCard);
+    const playerCard = Math.ceil(Math.random() * 13);
+    const compCard = Math.ceil(Math.random() * 13);
+    setPlayerCard(playerCard);
+    setCompCard(compCard);
 
     // Check who won
-    checkWinner(playerOneCard, playerTwoCard);
+    checkWinner(playerCard, compCard);
   }
 
+
+
   useEffect(() => {
-    document.title = 'Welcome to War ' + playerOneName;
-    setGameMessage(`Score is ${playerOneScore} - ${playerTwoScore}`);
+    document.title = 'Welcome to War ' + playerName;
+    setGameMessage(`Score is ${playerScore} - ${compStore}`);
     checkGameOver();
   })
 
   return (
     <div className='App'>
       <p>What is your name?</p>
-      <input value={playerOneName} onChange={(e) => setPlayerOneName(e.target.value)}></input>
-      <p>{playerOneName}'s score: {playerOneScore} </p>
-      <p>Player Two's score: {playerTwoScore}</p>
+      <input value={playerName} onChange={(e) => setPlayerName(e.target.value)}></input>
+      <p>{playerName}'s score: {playerScore} </p>
+      <p>Player Two's score: {compStore}</p>
       <button disabled={gameOver} onClick={() => {playGameHandler()}}>Click to play!</button>
       <p style={{ fontWeight: 'bold' }}>{gameMessage}</p>
-      <p>Player One's card: {playerOneCard}</p>
-      <p>Player Two's card: {playerTwoCard}</p>
+      <div className='card'>{playerName}'s card: <span>{playerCard}</span></div>
+      <div className='card'>Player Two's card: <span>{compCard}</span></div>
     </div>
   );
 }
