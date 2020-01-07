@@ -50,6 +50,8 @@ function App() {
       return (
         <span className={'cardNum'} key={`card- + ${i}`}>{card}</span>
       )
+    } else {
+      return null;
     }
   })
 
