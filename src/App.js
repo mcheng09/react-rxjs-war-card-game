@@ -46,9 +46,11 @@ function App() {
   }
 
   const prevCards = playerCards.map((card, i) => {
-    return (
-      <span className={'card'+i} key={`card + ${i}`}>{card}</span>
-    )
+    if (i > 0) {
+      return (
+        <span className={'cardNum'} key={`card- + ${i}`}>{card}</span>
+      )
+    }
   })
 
   useEffect(() => {
@@ -71,12 +73,21 @@ function App() {
     <div className='App'>
       <p>What is your name?</p>
       <input value={playerName} onChange={(e) => setPlayerName(e.target.value)}></input>
-      <p>{playerName}'s score: {playerScore} </p>
-      <p>Player Two's score: {compScore}</p>
+      <div className='scoreboard'>
+        <p className='score'>{playerName}'s score: {playerScore} </p>
+        <p className='score'>Player Two's score: {compScore}</p>
+      </div>
       <button disabled={gameOver} onClick={() => {playGameHandler()}}>Click to play!</button>
-      <p style={{ fontWeight: 'bold' }}>{gameMessage}</p>
-      <div className='card'>{playerName}'s card: <span>{playerCard}</span>{prevCards}</div>
-      <div className='card'>Player Two's card: <span>{compCard}</span></div>
+      <p className='msg' style={{ fontWeight: 'bold' }}>{gameMessage}</p>
+      <div className='card'>
+        <p>{playerName}'s card:</p>
+        <p>{playerCard}</p>
+        <div className='history'>{prevCards}</div>
+      </div>
+      <div className='card'>
+        <p>Player Two's card:</p>
+        <p>{compCard}</p>
+      </div>
     </div>
   );
 }

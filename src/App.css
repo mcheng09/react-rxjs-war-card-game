@@ -2,16 +2,62 @@
   text-align: center;
 }
 
-.card {
-  display: inline-block;
-  width: 45%;
-  font-size: 24px;
+.scoreboard {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   border: 1px solid black;
-  padding: 32px 0;
+  width: 80%;
+  margin: 24px auto;
+}
+
+.score {
+  width: 50%;
+}
+
+.score:first-child {
+   border-right: 1px solid black;
+}
+
+button {
+  padding: 12px;
+  width: 140px;
+  outline: none;
 }
 
 span {
-  display: block;
-  font-size: 32px;
-  margin-top: 16px;
+  display: inline-block;
+  margin: 0 12px;
+  width: 12px
+}
+
+.msg {
+  color: blue;
+}
+
+.card {
+  display: inline-flex;
+  flex-direction: column;
+  width: 40%;
+  text-align: center;
+  border: 1px solid black;
+  margin: 0 1%;
+  padding: 32px;
+}
+
+.card p {
+  width: 100%;
+  font-size: 24px;
+}
+
+.history {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.cardNum {
+  border: 1px solid black;
+  padding: 4px;
+  width: 16px;
+  margin: 12px;
 }
