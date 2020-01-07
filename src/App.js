@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 import './App.css'
 
@@ -20,6 +21,9 @@ observable.subscribe({
   complete() { console.log('done'); }
 });
 console.log('just after subscribe');
+
+map(x => x * x)(of(1, 2, 3)).subscribe((v) => console.log(`value: ${v}`));
+
 
 function App() {
 
