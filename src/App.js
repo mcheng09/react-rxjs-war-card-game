@@ -1,4 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+
+import './App.css'
 
 function App() {
 
@@ -7,6 +9,10 @@ function App() {
   const [playerTwoScore, setPlayerTwoScore] = useState(0);
   const [playerOneCard, setPlayerOneCard] = useState(null);
   const [playerTwoCard, setPlayerTwoCard] = useState(null);
+  const [playerOneName, setPlayerOneName] = useState('Mike');
+  const [gameOver, setGameOver] = useState(false);
+
+
   const [gameMessage, setGameMessage] = useState('Click button to play!')
 
   const updateScore = (score, setPlayerScore) => {
@@ -14,16 +20,19 @@ function App() {
   }
 
   const checkWinner = (playerOne, playerTwo) => {
-    if (playerOne > playerTwo) {
-      updateScore(playerOneScore, setPlayerOneScore);
-      setGameMessage('Player One Wins!')
+    if (playerOne > playerTwo) updateScore(playerOneScore, setPlayerOneScore);
+    if (playerTwo > playerOne) updateScore(playerTwoScore, setPlayerTwoScore);
+    setGameMessage(`Score is ${playerOneScore} - ${playerTwoScore}`);
+  }
+
+  const checkGameOver = () => {
+    if (playerOneScore > 9) {
+      setGameMessage(`Game over. ${playerOneName} wins!`);
+      setGameOver(true);
     }
-    else if (playerTwo > playerOne) {
-      updateScore(playerTwoScore, setPlayerTwoScore);
-      setGameMessage('Player Two Wins!')
-    }
-    else {
-      setGameMessage('Draw!')
+    else if (playerTwoScore > 9) {
+      setGameMessage('Game over. Computer wins!');
+      setGameOver(true);
     }
   }
 
@@ -35,14 +44,23 @@ function App() {
     setPlayerTwoCard(playerTwoCard);
 
     // Check who won
-    checkWinner(playerOneCard, playerTwoCard)
+    checkWinner(playerOneCard, playerTwoCard);
+
+    // Check if game is over
+    checkGameOver();
   }
 
+  useEffect(() => {
+    document.title = 'Welcome to War ' + playerOneName;
+  })
+
   return (
-    <div>
-      <p>Player One's score: {playerOneScore}</p>
+    <div className='App'>
+      <p>What is your name?</p>
+      <input value={playerOneName} onChange={(e) => setPlayerOneName(e.target.value)}></input>
+      <p>{playerOneName}'s score: {playerOneScore} </p>
       <p>Player Two's score: {playerTwoScore}</p>
-      <button onClick={() => {playGameHandler()}}>Click to play!</button>
+      <button disabled={gameOver} onClick={() => {playGameHandler()}}>Click to play!</button>
       <p style={{ fontWeight: 'bold' }}>{gameMessage}</p>
       <p>Player One's card: {playerOneCard}</p>
       <p>Player Two's card: {playerTwoCard}</p>
